@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-ag-grid/static/css/main.b100e6da.chunk.css",
+    "main.js": "/react-ag-grid/static/js/main.883432df.chunk.js",
+    "main.js.map": "/react-ag-grid/static/js/main.883432df.chunk.js.map",
+    "runtime-main.js": "/react-ag-grid/static/js/runtime-main.1db5b60f.js",
+    "runtime-main.js.map": "/react-ag-grid/static/js/runtime-main.1db5b60f.js.map",
+    "static/js/2.0c450ba0.chunk.js": "/react-ag-grid/static/js/2.0c450ba0.chunk.js",
+    "static/js/2.0c450ba0.chunk.js.map": "/react-ag-grid/static/js/2.0c450ba0.chunk.js.map",
+    "index.html": "/react-ag-grid/index.html",
+    "precache-manifest.84777b664a2b36cebd5428c30b933e66.js": "/react-ag-grid/precache-manifest.84777b664a2b36cebd5428c30b933e66.js",
+    "service-worker.js": "/react-ag-grid/service-worker.js",
+    "static/css/main.b100e6da.chunk.css.map": "/react-ag-grid/static/css/main.b100e6da.chunk.css.map"
+  }
+}
