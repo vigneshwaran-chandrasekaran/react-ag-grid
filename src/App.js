@@ -8,11 +8,11 @@ function App() {
 
   const gridData = {
     columnDefs: [{
-      headerName: "Make", field: "make"
+      headerName: "Make", field: "make", sortable: true, filter: true
     }, {
-      headerName: "Model", field: "model"
+      headerName: "Model", field: "model", sortable: true, filter: true
     }, {
-      headerName: "Price amount", field: "price"
+      headerName: "Price amount", field: "price", sortable: true, filter: true
     }],
     rowData: [{
       make: "Toyota", model: "Celica", price: 35000
