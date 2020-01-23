@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 export default class DataTable extends Component {
 	constructor(props) {
 		super(props);
+		this.$node = null;
+		this.$table = null;
+		this.hadleOnClick = this.hadleOnClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -10,23 +13,38 @@ export default class DataTable extends Component {
 	}
 
 	componentWillUnmount() {
-		this.$node.destroy();
+		// this.$node.destroy();
 	}
 
-	initDataTable() {
+	initDataTable = () => {
 		this.$node = window.jQuery(this.refs.dataTable);
-		this.$node.DataTable();
+		this.$table = this.$node.DataTable({
+			dom: 'Bfrtip',
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+		});
+
+		console.log('this.$table', this.$table);
+		console.log('this.$node', this.$node);
+
+		window.jQuery(this.$node).on('click', 'tr', function() {
+			console.log(this);
+			// var data = this.$table.row(this).data();
+			// alert('You clicked on ' + data[0] + "'s row");
+			// this.hadleOnClick();
+			// console.log('this.$table', this.$table);
+			// console.log('this.$node', this.$node);
+		});
+	};
+
+	hadleOnClick() {
+		console.log('this.$table', this.$table);
+		console.log('this.$node', this.$node);
 	}
 
 	render() {
 		return (
 			<div>
-				<table
-					id="example"
-					className="display"
-					// style={{ width: 100% }}
-					ref="dataTable"
-				>
+				<table id="example" className="display" ref="dataTable">
 					<thead>
 						<tr>
 							<th>Name</th>

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { AgGridBasic, AirDatepicker, DataTable } from './components';
+import {
+	AgGridBasic,
+	AirDatepicker,
+	DataTable,
+	DataTableHooks,
+} from './components';
 
 function App() {
 	return (
 		<div>
 			<DataTable />
-			<AirDatepicker />
+			<DataTableHooks />
+			{/* <AirDatepicker /> */}
 			{/* <AgGridBasic /> */}
 		</div>
 	);
