@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 
 export default function DataTableHooks() {
 	const dataTable = useRef();
+
+	const loop = Array.from({ length: 5 }, (v, k) => k + 1);
+
 	// const [table, setTable] = useState();
 	useLayoutEffect(() => {
 		// setNode(window.jQuery(dataTable));
@@ -52,6 +55,16 @@ export default function DataTableHooks() {
 					</tr>
 				</thead>
 				<tbody>
+					{loop.map(obj => (
+						<tr>
+							<td>{obj}</td>
+							<td>System Architect</td>
+							<td>Edinburgh</td>
+							<td>61</td>
+							<td>2011/04/25</td>
+							<td>$320,800</td>
+						</tr>
+					))}
 					<tr>
 						<td>Tiger Nixon</td>
 						<td>System Architect</td>
