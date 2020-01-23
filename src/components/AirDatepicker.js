@@ -16,10 +16,16 @@ export default class AirDatepicker extends Component {
 
 	initDatepicker() {
 		this.$node = window.jQuery(this.refs.datepicker);
-		this.$node.datepicker();
+		this.$node.datepicker({
+			language: 'en',
+			view: 'months',
+			autoClose: true,
+			onSelect: e => this.handleOnSelect(e),
+		});
 	}
 
-	handleOnSelect() {
+	handleOnSelect(e) {
+		console.log(e);
 		console.log(this.$node.data('datepicker'));
 	}
 
@@ -27,12 +33,7 @@ export default class AirDatepicker extends Component {
 		return (
 			<div>
 				<h3>Choose date!</h3>
-				<input
-					type="text"
-					ref="datepicker"
-					language={'en'}
-					onSelect={e => this.handleOnSelect(e)}
-				/>
+				<input type="text" ref="datepicker" />
 			</div>
 		);
 	}
