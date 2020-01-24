@@ -4,9 +4,12 @@ import faker from 'faker';
 export default function DataTableHooks() {
 	const dataTable = useRef();
 	const loop = Array.from({ length: 100 }, (v, k) => k + 1);
+	const $ = window.jQuery;
+
+	console.log('looppp', loop);
 
 	useLayoutEffect(() => {
-		const $elmt = window.jQuery(dataTable.current);
+		const $elmt = $(dataTable.current);
 		const $table = $elmt.DataTable({
 			dom: 'Bfrtip',
 			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
@@ -14,7 +17,7 @@ export default function DataTableHooks() {
 				[0, 'desc'],
 				[1, 'desc'],
 			],
-			stateSave: true, // on page reload preserve the pagination state
+			// stateSave: true, // on page reload preserve the pagination state
 			pagingType: 'full_numbers',
 			language: {
 				lengthMenu: 'Display _MENU_ records per page',
@@ -55,9 +58,9 @@ export default function DataTableHooks() {
 					}, 0);
 
 				// Update footer
-				window
-					.jQuery(api.column(4).footer())
-					.html('$' + pageTotal + ' ( $' + total + ' total)');
+				$(api.column(4).footer()).html(
+					'$' + pageTotal + ' ( $' + total + ' total)'
+				);
 			},
 			responsive: true,
 			initComplete: function() {
@@ -65,14 +68,13 @@ export default function DataTableHooks() {
 					.columns()
 					.every(function() {
 						var column = this;
-						var select = window
-							.jQuery(
-								'<select><option value=""></option></select>'
-							)
-							.appendTo(window.jQuery(column.footer()).empty())
+						var select = $(
+							'<select><option value=""></option></select>'
+						)
+							.appendTo($(column.footer()).empty())
 							.on('change', function() {
-								var val = window.jQuery.fn.dataTable.util.escapeRegex(
-									window.jQuery(this).val()
+								var val = $.fn.dataTable.util.escapeRegex(
+									$(this).val()
 								);
 
 								column
@@ -101,7 +103,7 @@ export default function DataTableHooks() {
 			},
 		});
 
-		window.jQuery($elmt[0]).on('click', 'tbody tr', function() {
+		$($elmt[0]).on('click', 'tbody tr', function() {
 			var data = $table.row(this).data();
 			console.log('this.$node', $elmt);
 			console.log('this.$table', $table);
@@ -139,7 +141,7 @@ export default function DataTableHooks() {
 					</tr>
 				</thead>
 				<tbody>
-					{loop.map(obj => (
+					{loop.map(() => (
 						<tr>
 							<td>{faker.name.findName()}</td>
 							<td>{faker.finance.accountName()}</td>
