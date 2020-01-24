@@ -5,14 +5,17 @@ import {
 	DataTable,
 	DataTableHooks,
 	DataTableHooksRemoteData,
+	ServerData,
 } from './components';
 
 function App() {
 	return (
 		<div>
 			{/* <DataTable /> */}
-			<DataTableHooksRemoteData />
-			{/* <DataTableHooks /> */}
+			{/* <DataTableHooksRemoteData /> */}
+			<DataTableHooks />
+			<hr />
+			<ServerData />
 			{/* <AirDatepicker /> */}
 			{/* <AgGridBasic /> */}
 		</div>

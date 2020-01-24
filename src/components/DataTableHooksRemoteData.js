@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
-import faker from 'faker';
 
-export default function DataTableHooksRemoteData() {
+export default function DataTableHooksRemoteData(props) {
 	const dataTable = useRef();
-	const loop = Array.from({ length: 100 }, (v, k) => k + 1);
+	const loop = props.userData;
+	console.log('props', props);
+	console.log('loop', loop);
 
 	useLayoutEffect(() => {
 		const $elmt = window.jQuery(dataTable.current);
@@ -25,40 +26,6 @@ export default function DataTableHooksRemoteData() {
 			},
 			// searching: false, // to disable search
 			// ordering: false, // to disable sorting
-			footerCallback: function(row, data, start, end, display) {
-				var api = this.api(),
-					data;
-
-				// Remove the formatting to get integer data for summation
-				let intVal = function(i) {
-					return typeof i === 'string'
-						? i.replace(/[\$,]/g, '') * 1
-						: typeof i === 'number'
-						? i
-						: 0;
-				};
-
-				// Total over all pages
-				let total = api
-					.column(4)
-					.data()
-					.reduce(function(a, b) {
-						return intVal(a) + intVal(b);
-					}, 0);
-
-				// Total over this page
-				let pageTotal = api
-					.column(4, { page: 'current' })
-					.data()
-					.reduce(function(a, b) {
-						return intVal(a) + intVal(b);
-					}, 0);
-
-				// Update footer
-				window
-					.jQuery(api.column(4).footer())
-					.html('$' + pageTotal + ' ( $' + total + ' total)');
-			},
 			responsive: true,
 		});
 
@@ -73,67 +40,45 @@ export default function DataTableHooksRemoteData() {
 
 		return () => {
 			// cleanup
-			$elmt.destroy();
+			// $elmt.destroy();
 		};
 	}, []);
 
 	return (
 		<div>
+			<h1>DataTable with server send data</h1>
 			<table
-				id="exampleHook"
+				id="exampleHookServer"
 				className="table table-stripedssss table-bordered displays compact hover cell-border order-column"
 				ref={dataTable}
 			>
 				<thead>
 					<tr>
-						<th rowspan="2">Name</th>
-						<th colspan="2">HR Information</th>
-						<th colspan="3">Contact</th>
-					</tr>
-					<tr>
-						<th>Position</th>
-						<th>Salary</th>
-						<th>Office</th>
-						<th>Extn.</th>
-						<th>E-mail</th>
+						<th>userId</th>
+						<th>id</th>
+						<th>title</th>
+						<th>body</th>
 					</tr>
 				</thead>
 				<tbody>
-					{loop.map(obj => (
-						<tr>
-							<td>{faker.name.findName()}</td>
-							<td>{faker.finance.accountName()}</td>
-							<td>${faker.commerce.price()}</td>
-							<td>{faker.address.country()}</td>
-							<td>{faker.random.number()}</td>
-							<td>{faker.internet.email()}</td>
-						</tr>
-					))}
-					{/* <tr>
-						<td>Tiger Nixon</td>
-						<td>System Architect</td>
-						<td>Edinburgh</td>
-						<td>61</td>
-						<td>2011/04/25</td>
-						<td>$320,800</td>
-					</tr>
-					<tr>
-						<td>Donna Snider</td>
-						<td>Customer Support</td>
-						<td>New York</td>
-						<td>27</td>
-						<td>2011/01/25</td>
-						<td>$112,000</td>
-					</tr> */}
+					{loop &&
+						loop.map(obj => (
+							<tr>
+								<td>
+									<button>Click me {obj.userId}</button>
+								</td>
+								<td>{obj.id}</td>
+								<td>{obj.title}</td>
+								<td>{obj.body}</td>
+							</tr>
+						))}
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>Name</th>
-						<th>Position</th>
-						<th>Office</th>
-						<th>Age</th>
-						<th></th>
-						<th>Salary</th>
+						<th>userId</th>
+						<th>id</th>
+						<th>title</th>
+						<th>body</th>
 					</tr>
 				</tfoot>
 			</table>

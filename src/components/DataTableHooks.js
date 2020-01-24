@@ -60,6 +60,45 @@ export default function DataTableHooks() {
 					.html('$' + pageTotal + ' ( $' + total + ' total)');
 			},
 			responsive: true,
+			initComplete: function() {
+				this.api()
+					.columns()
+					.every(function() {
+						var column = this;
+						var select = window
+							.jQuery(
+								'<select><option value=""></option></select>'
+							)
+							.appendTo(window.jQuery(column.footer()).empty())
+							.on('change', function() {
+								var val = window.jQuery.fn.dataTable.util.escapeRegex(
+									window.jQuery(this).val()
+								);
+
+								column
+									.search(
+										val ? '^' + val + '$' : '',
+										true,
+										false
+									)
+									.draw();
+							});
+
+						column
+							.data()
+							.unique()
+							.sort()
+							.each(function(d, j) {
+								select.append(
+									'<option value="' +
+										d +
+										'">' +
+										d +
+										'</option>'
+								);
+							});
+					});
+			},
 		});
 
 		window.jQuery($elmt[0]).on('click', 'tbody tr', function() {
@@ -79,6 +118,7 @@ export default function DataTableHooks() {
 
 	return (
 		<div>
+			<h1>DataTable basic example</h1>
 			<table
 				id="exampleHook"
 				className="table table-stripedssss table-bordered displays compact hover cell-border order-column"
