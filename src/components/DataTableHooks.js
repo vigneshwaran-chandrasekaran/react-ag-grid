@@ -103,7 +103,7 @@ export default function DataTableHooks() {
 			},
 		});
 
-		$($elmt[0]).on('click', 'tbody tr', function() {
+		$($elmt).on('click', 'tbody tr', function() {
 			var data = $table.row(this).data();
 			console.log('this.$node', $elmt);
 			console.log('this.$table', $table);

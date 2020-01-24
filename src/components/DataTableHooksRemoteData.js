@@ -5,9 +5,10 @@ export default function DataTableHooksRemoteData(props) {
 	const loop = props.userData;
 	console.log('props', props);
 	console.log('loop', loop);
+	const $ = window.jQuery;
 
 	useLayoutEffect(() => {
-		const $elmt = window.jQuery(dataTable.current);
+		const $elmt = $(dataTable.current);
 		const $table = $elmt.DataTable({
 			dom: 'Bfrtip',
 			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
@@ -27,15 +28,36 @@ export default function DataTableHooksRemoteData(props) {
 			// searching: false, // to disable search
 			// ordering: false, // to disable sorting
 			responsive: true,
+			columnDefs: [
+				{
+					targets: 0,
+					checkboxes: {
+						selectRow: true,
+					},
+					orderable: false,
+					className: 'select-checkbox',
+				},
+			],
+			select: {
+				style: 'multi',
+			},
+			// for checkbox selection
+			// https://jsfiddle.net/gyrocode/snqw56dw/
+			// https://www.gyrocode.com/articles/jquery-datatables-checkboxes/
 		});
 
-		window.jQuery($elmt[0]).on('click', 'tbody tr', function() {
+		$($elmt[0]).on('click', 'tbody tr', function() {
 			var data = $table.row(this).data();
 			console.log('this.$node', $elmt);
 			console.log('this.$table', $table);
 			console.log(this);
 			console.log(data);
-			alert('You clicked on ' + data[0] + "'s row");
+			// alert('You clicked on ' + data[3] + "'s row");
+		});
+
+		$('#button').click(function() {
+			console.log($table.rows('.selected').data());
+			alert($table.rows('.selected').data().length + ' row(s) selected');
 		});
 
 		return () => {
@@ -46,7 +68,10 @@ export default function DataTableHooksRemoteData(props) {
 
 	return (
 		<div>
-			<h1>DataTable with server send data</h1>
+			<h1>
+				DataTable with server send data{' '}
+				<button id="button">Row count</button>
+			</h1>
 			<table
 				id="exampleHookServer"
 				className="table table-stripedssss table-bordered displays compact hover cell-border order-column"
@@ -54,6 +79,7 @@ export default function DataTableHooksRemoteData(props) {
 			>
 				<thead>
 					<tr>
+						<th></th>
 						<th>userId</th>
 						<th>id</th>
 						<th>title</th>
@@ -64,6 +90,7 @@ export default function DataTableHooksRemoteData(props) {
 					{loop &&
 						loop.map(obj => (
 							<tr>
+								<td></td>
 								<td>
 									<button>Click me {obj.userId}</button>
 								</td>
@@ -75,6 +102,7 @@ export default function DataTableHooksRemoteData(props) {
 				</tbody>
 				<tfoot>
 					<tr>
+						<th></th>
 						<th>userId</th>
 						<th>id</th>
 						<th>title</th>
