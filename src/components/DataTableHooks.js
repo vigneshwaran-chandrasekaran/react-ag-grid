@@ -59,6 +59,7 @@ export default function DataTableHooks() {
 					.jQuery(api.column(4).footer())
 					.html('$' + pageTotal + ' ( $' + total + ' total)');
 			},
+			responsive: true,
 		});
 
 		window.jQuery($elmt[0]).on('click', 'tbody tr', function() {
@@ -80,7 +81,7 @@ export default function DataTableHooks() {
 		<div>
 			<table
 				id="exampleHook"
-				className="displays compact table table-striped table-bordered"
+				className="table table-stripedssss table-bordered displays compact hover cell-border order-column"
 				ref={dataTable}
 			>
 				<thead>

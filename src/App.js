@@ -9,7 +9,7 @@ import {
 function App() {
 	return (
 		<div>
-			<DataTable />
+			{/* <DataTable /> */}
 			<DataTableHooks />
 			{/* <AirDatepicker /> */}
 			{/* <AgGridBasic /> */}
