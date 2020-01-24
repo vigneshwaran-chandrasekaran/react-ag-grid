@@ -23,6 +23,42 @@ export default function DataTableHooks() {
 				infoEmpty: 'No records available',
 				infoFiltered: '(filtered from _MAX_ total records)',
 			},
+			// searching: false, // to disable search
+			// ordering: false, // to disable sorting
+			footerCallback: function(row, data, start, end, display) {
+				var api = this.api(),
+					data;
+
+				// Remove the formatting to get integer data for summation
+				let intVal = function(i) {
+					return typeof i === 'string'
+						? i.replace(/[\$,]/g, '') * 1
+						: typeof i === 'number'
+						? i
+						: 0;
+				};
+
+				// Total over all pages
+				let total = api
+					.column(4)
+					.data()
+					.reduce(function(a, b) {
+						return intVal(a) + intVal(b);
+					}, 0);
+
+				// Total over this page
+				let pageTotal = api
+					.column(4, { page: 'current' })
+					.data()
+					.reduce(function(a, b) {
+						return intVal(a) + intVal(b);
+					}, 0);
+
+				// Update footer
+				window
+					.jQuery(api.column(4).footer())
+					.html('$' + pageTotal + ' ( $' + total + ' total)');
+			},
 		});
 
 		window.jQuery($elmt[0]).on('click', 'tbody tr', function() {
@@ -95,7 +131,7 @@ export default function DataTableHooks() {
 						<th>Position</th>
 						<th>Office</th>
 						<th>Age</th>
-						<th>Start date</th>
+						<th></th>
 						<th>Salary</th>
 					</tr>
 				</tfoot>
