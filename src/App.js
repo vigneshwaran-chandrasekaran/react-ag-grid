@@ -4,13 +4,15 @@ import {
 	AirDatepicker,
 	DataTable,
 	DataTableHooks,
+	DataTableHooksRemoteData,
 } from './components';
 
 function App() {
 	return (
 		<div>
 			{/* <DataTable /> */}
-			<DataTableHooks />
+			<DataTableHooksRemoteData />
+			{/* <DataTableHooks /> */}
 			{/* <AirDatepicker /> */}
 			{/* <AgGridBasic /> */}
 		</div>
