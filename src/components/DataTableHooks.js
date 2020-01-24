@@ -15,6 +15,14 @@ export default function DataTableHooks() {
 				[1, 'desc'],
 			],
 			stateSave: true, // on page reload preserve the pagination state
+			pagingType: 'full_numbers',
+			language: {
+				lengthMenu: 'Display _MENU_ records per page',
+				zeroRecords: 'Nothing found - sorry', // on search if no data found this error will be shown
+				info: 'Showing page _PAGE_ of _PAGES_',
+				infoEmpty: 'No records available',
+				infoFiltered: '(filtered from _MAX_ total records)',
+			},
 		});
 
 		window.jQuery($elmt[0]).on('click', 'tbody tr', function() {
@@ -36,7 +44,7 @@ export default function DataTableHooks() {
 		<div>
 			<table
 				id="exampleHook"
-				className="displays table table-striped table-bordered"
+				className="displays compact table table-striped table-bordered"
 				ref={dataTable}
 			>
 				<thead>
