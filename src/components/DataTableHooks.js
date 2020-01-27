@@ -17,6 +17,7 @@ export default function DataTableHooks() {
 				[0, 'desc'],
 				[1, 'desc'],
 			],
+			jQueryUI: true,
 			// stateSave: true, // on page reload preserve the pagination state
 			pagingType: 'full_numbers',
 			language: {
@@ -130,9 +131,9 @@ export default function DataTableHooks() {
 			>
 				<thead>
 					<tr>
-						<th rowspan="2">Name</th>
-						<th colspan="2">HR Information</th>
-						<th colspan="3">Contact</th>
+						<th rowSpan="2">Name</th>
+						<th colSpan="2">HR Information</th>
+						<th colSpan="3">Contact</th>
 					</tr>
 					<tr>
 						<th>Position</th>
@@ -143,16 +144,17 @@ export default function DataTableHooks() {
 					</tr>
 				</thead>
 				<tbody>
-					{loop.map(() => (
-						<tr>
-							<td>{faker.name.findName()}</td>
-							<td>{faker.finance.accountName()}</td>
-							<td>${faker.commerce.price()}</td>
-							<td>{faker.address.country()}</td>
-							<td>{faker.random.number()}</td>
-							<td>{faker.internet.email()}</td>
-						</tr>
-					))}
+					{loop &&
+						loop.map(() => (
+							<tr key={faker.random.uuid()}>
+								<td>{faker.name.findName()}</td>
+								<td>{faker.finance.accountName()}</td>
+								<td>${faker.commerce.price()}</td>
+								<td>{faker.address.country()}</td>
+								<td>{faker.random.number()}</td>
+								<td>{faker.internet.email()}</td>
+							</tr>
+						))}
 					{/* <tr>
 						<td>Tiger Nixon</td>
 						<td>System Architect</td>

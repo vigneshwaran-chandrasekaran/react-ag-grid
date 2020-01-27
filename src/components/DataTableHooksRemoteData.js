@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import faker from 'faker';
 
 export default function DataTableHooksRemoteData(props) {
 	const dataTable = useRef();
@@ -99,7 +100,7 @@ export default function DataTableHooksRemoteData(props) {
 				<tbody>
 					{loop &&
 						loop.map(obj => (
-							<tr>
+							<tr key={faker.random.uuid()}>
 								<td></td>
 								<td>
 									<button>Click me {obj.userId}</button>
