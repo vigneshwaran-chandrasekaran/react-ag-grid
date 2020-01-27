@@ -6,8 +6,6 @@ export default function DataTableHooks() {
 	const loop = Array.from({ length: 100 }, (v, k) => k + 1);
 	const $ = window.jQuery;
 
-	console.log('looppp', loop);
-
 	useLayoutEffect(() => {
 		const $elmt = $(dataTable.current);
 		const $table = $elmt.DataTable({

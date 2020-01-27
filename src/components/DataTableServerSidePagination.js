@@ -6,21 +6,52 @@ export default function DataTableServerSidePagination() {
 
 	useLayoutEffect(() => {
 		const $elmt = $(dataTable.current);
-		const $table = $elmt.DataTable({
+		const dt = $elmt.DataTable({
 			dom: 'Bfrtip',
 			processing: true,
 			serverSide: true,
-			ajax: {
-				url: 'https://reqres.in/api/users',
-				crossDomain: true,
+			paging: true,
+			pageLength: 5,
+			deferRender: true,
+			ajax: function(data, callback, settings) {
+				$.ajax({
+					url: 'https://reqres.in/api/users',
+					type: 'get',
+					data: {
+						RecordsStart: data.page,
+						PageSize: data.total_pages,
+					},
+					success: function(data, textStatus, jQxhr) {
+						// https://stackoverflow.com/questions/48867940/how-to-implement-pagination-with-serverside-get-api-in-datatables
+						callback({
+							data: data.data,
+							recordsTotal: data.total,
+							recordsFiltered: data.per_page,
+						});
+						console.log('data', data);
+					},
+					error: function(jqXhr, textStatus, errorThrown) {
+						console.log('jqXhr', jqXhr);
+						console.log('textStatus', textStatus);
+						console.log('errorThrown', errorThrown);
+					},
+				});
 			},
+
 			columns: [
-				{ data: 'id' },
+				{
+					class: 'details-control',
+					orderable: false,
+					data: 'id',
+				},
+
 				{ data: 'email' },
 				{ data: 'first_name' },
 				{ data: 'last_name' },
 				{
+					data: 'avatar',
 					render: function(data, type, JsonResultRow, meta) {
+						// console.log('data', data);
 						return (
 							'<img width="50" src="' +
 							JsonResultRow.avatar +
@@ -30,32 +61,86 @@ export default function DataTableServerSidePagination() {
 				},
 			],
 		});
+
+		// Array to track the ids of the details displayed rows
+		var detailRows = [];
+
+		$($elmt).on('click', 'tbody tr td.details-control', function() {
+			var tr = $(this).closest('tr');
+			var row = dt.row(tr);
+			var idx = $.inArray(tr.attr('id'), detailRows);
+
+			if (row.child.isShown()) {
+				tr.removeClass('details');
+				row.child.hide();
+
+				// Remove from the 'open' array
+				detailRows.splice(idx, 1);
+			} else {
+				tr.addClass('details');
+				row.child(format(row.data())).show();
+
+				// Add to the 'open' array
+				if (idx === -1) {
+					detailRows.push(tr.attr('id'));
+				}
+			}
+		});
+
+		// On each draw, loop over the `detailRows` array and show any child rows
+		dt.on('draw', function() {
+			$.each(detailRows, function(i, id) {
+				$('#' + id + ' td.details-control').trigger('click');
+			});
+		});
+
 		return () => {
 			// cleanup
-			// $elmt.destroy();
+			$elmt.destroy();
 		};
 	}, []);
 
+	function format(d) {
+		return (
+			'Full name: ' +
+			d.first_name +
+			' ' +
+			d.last_name +
+			'<br>' +
+			'Salary: ' +
+			d.email +
+			'<br>' +
+			'The child row can contain any data you wish, including links, images, inner tables etc.'
+		);
+	}
+
 	return (
-		<table id="exampleRemotePagination" className="display" ref={dataTable}>
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Email</th>
-					<th>First name</th>
-					<th>Last name</th>
-					<th>Avatar</th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>ID</th>
-					<th>Email</th>
-					<th>First name</th>
-					<th>Last name</th>
-					<th>Avatar</th>
-				</tr>
-			</tfoot>
-		</table>
+		<>
+			<h1>DataTable Server Side Pagination</h1>
+			<table
+				id="exampleRemotePagination"
+				className="display"
+				ref={dataTable}
+			>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Email</th>
+						<th>First name</th>
+						<th>Last name</th>
+						<th>Avatar</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>ID</th>
+						<th>Email</th>
+						<th>First name</th>
+						<th>Last name</th>
+						<th>Avatar</th>
+					</tr>
+				</tfoot>
+			</table>
+		</>
 	);
 }

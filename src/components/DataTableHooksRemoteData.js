@@ -4,8 +4,8 @@ import faker from 'faker';
 export default function DataTableHooksRemoteData(props) {
 	const dataTable = useRef();
 	const loop = props.userData;
-	console.log('props', props);
-	console.log('loop', loop);
+	// console.log('props', props);
+	// console.log('loop', loop);
 	const $ = window.jQuery;
 
 	useLayoutEffect(() => {
@@ -57,17 +57,17 @@ export default function DataTableHooksRemoteData(props) {
 
 		$($elmt[0]).on('click', 'tbody tr', function() {
 			var data = $table.row(this).data();
-			console.log('this.$node', $elmt);
-			console.log('this.$table', $table);
-			console.log(this);
-			console.log(data);
+			// console.log('this.$node', $elmt);
+			// console.log('this.$table', $table);
+			// console.log(this);
+			// console.log(data);
 			if (data) {
 				// alert('You clicked on ' + data[3] + "'s row");
 			}
 		});
 
 		$('#button').click(function() {
-			console.log($table.rows('.selected').data());
+			// console.log($table.rows('.selected').data());
 			alert($table.rows('.selected').data().length + ' row(s) selected');
 		});
 

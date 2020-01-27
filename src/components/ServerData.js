@@ -10,7 +10,7 @@ export default function ServerData() {
 			.get('https://jsonplaceholder.typicode.com/posts')
 			.then(function(response) {
 				// handle success
-				console.log(response);
+				// console.log(response);
 				setData(response.data);
 			})
 			.catch(function(error) {

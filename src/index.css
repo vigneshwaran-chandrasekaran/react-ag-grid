@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+td.details-control {
+  background: url('https://datatables.net/examples/resources/details_open.png') no-repeat center center;
+  cursor: pointer;
+}
+
+tr.details td.details-control {
+  background: url('https://datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
