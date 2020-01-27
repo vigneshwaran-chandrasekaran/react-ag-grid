@@ -11,7 +11,8 @@ export default function DataTableHooksRemoteData(props) {
 		const $elmt = $(dataTable.current);
 		const $table = $elmt.DataTable({
 			dom: 'Bfrtip',
-			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis'],
+			// colvis = column visibility
 			order: [
 				[0, 'desc'],
 				[1, 'desc'],
@@ -44,6 +45,13 @@ export default function DataTableHooksRemoteData(props) {
 			// for checkbox selection
 			// https://jsfiddle.net/gyrocode/snqw56dw/
 			// https://www.gyrocode.com/articles/jquery-datatables-checkboxes/
+			// initComplete: function() {
+			// 	$('.buttons-copy').html('<i class="fa fa-copy" />');
+			// 	$('.buttons-csv').html('<i class="fa fa-file-text-o" />');
+			// 	$('.buttons-excel').html('<i class="fa fa-file-excel-o" />');
+			// 	$('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />');
+			// 	$('.buttons-print').html('<i class="fa fa-print" />');
+			// },
 		});
 
 		$($elmt[0]).on('click', 'tbody tr', function() {
@@ -52,7 +60,9 @@ export default function DataTableHooksRemoteData(props) {
 			console.log('this.$table', $table);
 			console.log(this);
 			console.log(data);
-			// alert('You clicked on ' + data[3] + "'s row");
+			if (data) {
+				// alert('You clicked on ' + data[3] + "'s row");
+			}
 		});
 
 		$('#button').click(function() {

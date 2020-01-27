@@ -109,7 +109,9 @@ export default function DataTableHooks() {
 			console.log('this.$table', $table);
 			console.log(this);
 			console.log(data);
-			alert('You clicked on ' + data[0] + "'s row");
+			if (data) {
+				alert('You clicked on ' + data[0] + "'s row");
+			}
 		});
 
 		return () => {
