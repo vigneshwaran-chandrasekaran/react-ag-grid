@@ -28,7 +28,7 @@ export default class DataTable extends Component {
 
 		window.jQuery(this.$node).on('click', 'tr', function() {
 			console.log(this);
-			// var data = this.$table.row(this).data();
+			var data = this.$table.row(this).data();
 			if (data) {
 				// alert('You clicked on ' + data[0] + "'s row");
 			}

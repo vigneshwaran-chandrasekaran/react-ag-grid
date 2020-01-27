@@ -6,6 +6,7 @@ import {
 	DataTableHooks,
 	DataTableHooksRemoteData,
 	ServerData,
+	DataTableServerSidePagination,
 } from './components';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
 		<div>
 			{/* <DataTable /> */}
 			{/* <DataTableHooksRemoteData /> */}
+			<DataTableServerSidePagination />
 			<DataTableHooks />
 			<hr />
 			<ServerData />
